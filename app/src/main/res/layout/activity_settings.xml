@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SettingsActivity"
+    android:screenOrientation="portrait"
+    android:background="@color/colorPrimary">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/text_quant_ciclos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="18dp"
+            android:textStyle="normal"
+            android:textColor="@color/colorAccent"
+            android:text="@string/quantidade_de_ciclos"/>
+    </LinearLayout>
+
+    <Spinner
+        android:id="@+id/spinner_quant_ciclos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="18dp"
+        android:layout_marginLeft="18dp"
+        android:background="@color/colorAccent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" >
+        <TextView
+            android:id="@+id/text_durac_ciclo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="18dp"
+            android:textColor="@color/colorAccent"
+            android:text="@string/duracao_do_ciclo" />
+
+
+
+    </LinearLayout>
+
+    <Spinner
+        android:id="@+id/spinner_durac_ciclo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="18dp"
+        android:layout_marginLeft="18dp"
+        android:background="@color/colorAccent"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+        <TextView
+            android:id="@+id/text_interv_curto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="18dp"
+            android:textStyle="normal"
+            android:textColor="@color/colorAccent"
+            android:text="@string/intervalo_curto"/>
+    </LinearLayout>
+
+    <Spinner
+        android:id="@+id/spinner_interv_curto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="18dp"
+        android:layout_marginLeft="18dp"
+        android:background="@color/colorAccent"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+        <TextView
+            android:id="@+id/text_interv_longo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="18dp"
+            android:textStyle="normal"
+            android:textColor="@color/colorAccent"
+            android:text="@string/intervalo_longo"/>
+    </LinearLayout>
+
+    <Spinner
+        android:id="@+id/spinner_interv_longo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="18dp"
+        android:layout_marginLeft="18dp"
+        android:background="@color/colorAccent"/>
+
+
+    <TextView
+        android:id="@+id/text_alarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginLeft="18dp"
+        android:textStyle="normal"
+        android:textColor="@color/colorAccent"
+        android:text="@string/alarm" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp" >
+        <Spinner
+            android:id="@+id/spinner_alarm"
+            android:layout_width="wrap_content"
+            android:layout_weight="6"
+            android:popupBackground="@color/colorPrimaryDark"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:background="@color/colorAccent"/>
+        <Button
+            android:id="@+id/button_play_the_choice"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_weight="0"
+            android:background="@drawable/ic_play_circle_white_24dp" />
+    </LinearLayout>
+
+
+</LinearLayout>
