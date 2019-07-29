@@ -159,4 +159,7 @@
         <item>25 minutos</item>
     </string-array>
 
+    <string name="fim_tempo">Fim do Tempo</string>
+    <string name="sobre_fim_mensagem">Seu tempo acabou. Gostaria de iniciar outro?</string>
+
 </resources>
