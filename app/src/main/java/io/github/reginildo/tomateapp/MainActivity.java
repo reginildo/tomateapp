@@ -1,12 +1,9 @@
 package io.github.reginildo.tomateapp;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -18,15 +15,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
+
     public MainActivityPlaceHolder placeHolder;
 
     public static Tomate tomate = new Tomate(4, 25, 15, 5, R.raw.zvuk_budilnika);
@@ -37,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private static boolean timeToPomodoro = false;
     //private static boolean timeToEnd = false;
     private static final String EXTRA_TOMATE = "tomate";
-
-    //public enum Finalizacao {FINAL_YES, FINAL_NO};
+    public enum Finalizacao {FINAL_YES, FINAL_NO};
+    public static int choice_fragment;
 
     Button buttonSetttings, buttonStart, buttonStop;
     TextView textViewTimerCounter;
@@ -111,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
         return timeToPomodoro;
     }
 
+
     /*
     public static boolean isTimeToEnd() {
         if (countInteractions == tomate.getCiclosTime()){
@@ -153,32 +150,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    @SuppressLint("ValidFragment")
-    public class FinalizeDialogFragment extends DialogFragment {
-
-        DialogInterface.OnClickListener listener =
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == DialogInterface.BUTTON_POSITIVE) {
-                            countDownTimer.start();
-                        }
-                    }
-                };
-        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        @NonNull
-        @Override
-        public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-            return new AlertDialog.Builder(Objects.requireNonNull(getActivity()))
-                    .setTitle(R.string.init_pomodoro)
-                    .setMessage(R.string.msg_init_pomodoro)
-                    .setPositiveButton(R.string.yes, listener)
-                    .setNegativeButton(R.string.no, null)
-                    .create();
-        }
-    }
-
     private class ButtonStartListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -193,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    private void startCountDownTimer() {
+    public void startCountDownTimer() {
         countDownTimer = new TomateCountDownTimer(textViewTimerCounter, timeInFuture, 1000);
         countDownTimer.start();
     }
@@ -256,20 +227,28 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, R.string.hora_interv_curto, Toast.LENGTH_SHORT).show();
             timeInFuture = tomate.getShortBreakTime();
             Log.i("Script", "Interaction Short Break" + Integer.toString(countInteractions));
+            startCountDownTimer();
+
         } else if(isTimeToPomodoro()) {
             Toast.makeText(MainActivity.this,R.string.hora_pomodoro,Toast.LENGTH_SHORT).show();
             timeInFuture = tomate.getPomodoroTime();
             Log.i("Script", "Interaction Pomo" + Integer.toString(countInteractions));
             // todo é aqui que te que aparecer o popup pedindo pra iniciar um novo pomodoro
-            new FinalizeDialogFragment();
+            FinalTimerPomodoroFragment finalTimerFragment = new FinalTimerPomodoroFragment();
+            finalTimerFragment.show(getSupportFragmentManager(),"timer");
+            if (choice_fragment == 1) {
+                startCountDownTimer();
+            }
+
         }  else if (isTimeToLongBreak()){
             countInteractions = 0;
             Toast.makeText(MainActivity.this, R.string.hora_interv_longo, Toast.LENGTH_SHORT).show();
             timeInFuture = tomate.getLongBreakTime();
             Log.i("Script", "Interaction Long Break" + Integer.toString(countInteractions));
             // todo verificar aqui se o usuario quer iniciar um novo ciclo com um popup
+            startCountDownTimer();
         }
-        startCountDownTimer();
+        //startCountDownTimer();
     }
 
     private class MainActivityPlaceHolder{
@@ -291,5 +270,35 @@ public class MainActivity extends AppCompatActivity {
                     millisUntilFinished) + ":" + getCorrectTimer(false, millisUntilFinished);
             return correctTimerOnTick;
         }
+    }
+
+    public static class FinalTimerPomodoroFragment extends DialogFragment{
+
+        public static final String DIALOG_TAG = "editDialog";
+        public static final String EXTRA_TIMER = "timer";
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+            DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if (i == DialogInterface.BUTTON_NEGATIVE){
+                        choice_fragment = 0;
+                    } else if (i == DialogInterface.BUTTON_POSITIVE){
+                        choice_fragment = 1;
+                    }
+                }
+            };
+
+            AlertDialog dialog = new AlertDialog.Builder(getActivity(), R.style.AlertDialogTheme)
+                    .setTitle(R.string.fim_tempo)
+                    .setMessage(R.string.end_short_timer_msg)
+                    .setPositiveButton(R.string.yes, listener)
+                    .setNegativeButton(R.string.no, listener)
+                    .create();
+
+            return dialog;
+        }
+
     }
 }

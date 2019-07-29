@@ -160,6 +160,8 @@
     </string-array>
 
     <string name="fim_tempo">Fim do Tempo</string>
-    <string name="sobre_fim_mensagem">Seu tempo acabou. Gostaria de iniciar outro?</string>
+    <string name="end_short_timer_msg">Seu descanso acabou. Gostaria de iniciar outro pomodoro agora?</string>
+    <string name="end_pomodoro_timer_msg">Seu pomodoro acabou. Descanse um pouco. =)</string>
+
 
 </resources>
