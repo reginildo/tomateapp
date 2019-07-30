@@ -16,6 +16,11 @@
     </style>
     <style name="AlertDialogTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
         <item name="android:colorBackground">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:color">@color/colorPrimaryDark</item>
+        <item name="android:panelColorForeground">@color/colorPrimaryDark</item>
     </style>
 
 </resources>

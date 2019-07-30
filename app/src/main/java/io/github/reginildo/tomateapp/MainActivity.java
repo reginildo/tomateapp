@@ -31,10 +31,9 @@ public class MainActivity extends AppCompatActivity {
     private static boolean timeToShortBreak = false;
     private static boolean timeToLongBreak = false;
     private static boolean timeToPomodoro = false;
-    //private static boolean timeToEnd = false;
     private static final String EXTRA_TOMATE = "tomate";
-    public enum Finalizacao {FINAL_YES, FINAL_NO};
-    public static int choice_fragment;
+
+    public static Finaliza finaliza;
 
     Button buttonSetttings, buttonStart, buttonStop;
     TextView textViewTimerCounter;
@@ -63,6 +62,14 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         textViewTimerCounter.setText(placeHolder.getPomodoroCorrectTimer());
 
+    }
+
+    public static Finaliza getFinaliza() {
+        return finaliza;
+    }
+
+    public static synchronized void setFinaliza(Finaliza finaliza) {
+        MainActivity.finaliza = finaliza;
     }
 
     static String getCorrectTimer(boolean isMinute, long millisUntilFinished) {
@@ -236,9 +243,6 @@ public class MainActivity extends AppCompatActivity {
             // todo é aqui que te que aparecer o popup pedindo pra iniciar um novo pomodoro
             FinalTimerPomodoroFragment finalTimerFragment = new FinalTimerPomodoroFragment();
             finalTimerFragment.show(getSupportFragmentManager(),"timer");
-            if (choice_fragment == 1) {
-                startCountDownTimer();
-            }
 
         }  else if (isTimeToLongBreak()){
             countInteractions = 0;
@@ -246,9 +250,11 @@ public class MainActivity extends AppCompatActivity {
             timeInFuture = tomate.getLongBreakTime();
             Log.i("Script", "Interaction Long Break" + Integer.toString(countInteractions));
             // todo verificar aqui se o usuario quer iniciar um novo ciclo com um popup
-            startCountDownTimer();
         }
+
         //startCountDownTimer();
+
+
     }
 
     private class MainActivityPlaceHolder{
@@ -274,6 +280,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static class FinalTimerPomodoroFragment extends DialogFragment{
 
+
         public static final String DIALOG_TAG = "editDialog";
         public static final String EXTRA_TIMER = "timer";
         @NonNull
@@ -283,9 +290,11 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     if (i == DialogInterface.BUTTON_NEGATIVE){
-                        choice_fragment = 0;
+                        setFinaliza(Finaliza.FINAL_NO);
                     } else if (i == DialogInterface.BUTTON_POSITIVE){
-                        choice_fragment = 1;
+                        setFinaliza(Finaliza.FINAL_YES);
+                        MainActivity mainActivity = (MainActivity) getActivity();
+                        mainActivity.startCountDownTimer();
                     }
                 }
             };
@@ -296,9 +305,10 @@ public class MainActivity extends AppCompatActivity {
                     .setPositiveButton(R.string.yes, listener)
                     .setNegativeButton(R.string.no, listener)
                     .create();
-
             return dialog;
         }
-
     }
+
+    public enum Finaliza {FINAL_YES, FINAL_NO};
+
 }

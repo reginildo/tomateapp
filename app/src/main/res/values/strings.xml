@@ -163,5 +163,8 @@
     <string name="end_short_timer_msg">Seu descanso acabou. Gostaria de iniciar outro pomodoro agora?</string>
     <string name="end_pomodoro_timer_msg">Seu pomodoro acabou. Descanse um pouco. =)</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>
